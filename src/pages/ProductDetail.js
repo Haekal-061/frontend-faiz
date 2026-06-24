@@ -8,7 +8,7 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [jumlahBeli, setJumlahBeli] = useState(1);
-  const [indeksGambar, setIndeksGambar] = useState(0);
+  const [showImageModal, setShowImageModal] = useState(false);
   const [produk, setProduk] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,44 +28,6 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
   }, [id]);
 
   const formatHarga = (price) => `Rp ${Number(price).toLocaleString('id-ID')}`;
-
-  // Fungsi untuk membuat galeri dari database atau fallback ke gambar kategori
-  const generateGaleri = (product) => {
-    const mainImage = product.imageUrl;
-    
-    // Jika sudah ada imageGallery dari database, gunakan itu
-    if (product.imageGallery && Array.isArray(product.imageGallery) && product.imageGallery.length > 0) {
-      return [mainImage, ...product.imageGallery];
-    }
-    
-    // Fallback ke kategori jika belum ada galeri khusus
-    const categoryImages = {
-      'Kue Ulang Tahun': [
-        'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80'
-      ],
-      'Dessert Box': [
-        'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1599599810694-b5ac4dd83eaf?auto=format&fit=crop&q=80'
-      ],
-      'Kue Kering': [
-        'https://images.unsplash.com/photo-1557925923-cd4648e211a0?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80'
-      ],
-      'Roti': [
-        'https://images.unsplash.com/photo-1551024709-8f23befc6bed?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1542831371-d531d36971e6?auto=format&fit=crop&q=80'
-      ]
-    };
-    
-    const images = categoryImages[product.category] || [];
-    return [mainImage, ...images];
-  };
-
 
   if (loading) {
     return (
@@ -98,7 +60,6 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
   }
 
   const stokTersedia = Number(produk.stock) || 0;
-  const galeri = generateGaleri(produk);
 
   const aturJumlah = (angka) => {
     const nilaiBaru = jumlahBeli + angka;
@@ -123,30 +84,11 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
         <div className="glass-panel" style={{ display: 'flex', borderRadius: '24px', overflow: 'hidden', width: '100%', padding: '40px', gap: '50px', border: '1px solid rgba(255,255,255,0.4)' }}>
           <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <img
-              src={galeri[indeksGambar]}
+              src={produk.imageUrl}
               alt={produk.name}
-              style={{ width: '100%', height: '380px', objectFit: 'cover', borderRadius: '8px', transition: 'all 0.3s ease' }}
+              onClick={() => setShowImageModal(true)}
+              style={{ width: '100%', height: '380px', objectFit: 'cover', borderRadius: '8px', transition: 'all 0.3s ease', cursor: 'zoom-in' }}
             />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-              {galeri.map((gbr, idx) => (
-                <img
-                  key={idx}
-                  src={gbr}
-                  alt={`thumbnail-${idx}`}
-                  onClick={() => setIndeksGambar(idx)}
-                  style={{
-                    width: '100%',
-                    height: '85px',
-                    objectFit: 'cover',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    border: indeksGambar === idx ? '2px solid #b45309' : '2px solid transparent',
-                    opacity: indeksGambar === idx ? '1' : '0.6',
-                    transition: 'all 0.2s ease'
-                  }}
-                />
-              ))}
-            </div>
           </div>
 
           <div style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
@@ -217,6 +159,65 @@ const DetailProduk = ({ tambahKeKeranjang }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal Gambar */}
+      {showImageModal && (
+        <div 
+          onClick={() => setShowImageModal(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            cursor: 'zoom-out',
+            padding: '20px'
+          }}
+        >
+          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
+            <img 
+              src={produk.imageUrl} 
+              alt={produk.name}
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '90vh', 
+                objectFit: 'contain',
+                borderRadius: '12px',
+                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button 
+              onClick={() => setShowImageModal(false)}
+              style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+                background: 'white',
+                color: '#1f2937',
+                border: 'none',
+                borderRadius: '50%',
+                width: '35px',
+                height: '35px',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+              }}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
