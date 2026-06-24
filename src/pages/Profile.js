@@ -71,11 +71,7 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
         formData.append('profilePicture', profileFile);
       }
 
-      const response = await API.put('/auth/profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await API.put('/auth/profile', formData);
 
       const updatedUser = response.data;
       localStorage.setItem('campbread_user', JSON.stringify(updatedUser));
