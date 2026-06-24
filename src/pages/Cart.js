@@ -109,8 +109,8 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
 
       Swal.fire({
         icon: 'success',
-        title: 'Pesanan Dikonfirmasi',
-        text: 'Pesanan Ditambahkan pada Keranjang.',
+        title: 'Pesanan Berhasil',
+        text: 'Pesanan Dikonfirmasi.',
         toast: true,
         position: 'center',
         timer: 1500,
