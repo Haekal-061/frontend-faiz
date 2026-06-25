@@ -288,7 +288,6 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                 style={{ padding: '10px 14px', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', fontSize: '14px' }}
               >
                 <option value="all">Semua Status</option>
-                <option value="pending">Pending</option>
                 <option value="confirmed">Confirmed</option>
                 <option value="processing">Processing</option>
                 <option value="completed">Completed</option>
