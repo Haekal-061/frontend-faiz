@@ -486,7 +486,7 @@ const DashboardAdmin = ({ setIsLoggedIn, setUserRole, setUser }) => {
                           {order.paymentProof && (
                             <div style={{ marginTop: '15px' }}>
                               <div style={{ fontWeight: '800', marginBottom: '8px', color: '#111827', fontSize: '14px' }}>Bukti Transfer:</div>
-                              <a href={`http://localhost:5000${order.paymentProof}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '8px 16px', backgroundColor: '#3b82f6', color: 'white', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}>
+                              <a href={`${API.defaults.baseURL.replace('/api', '')}${order.paymentProof}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '8px 16px', backgroundColor: '#3b82f6', color: 'white', borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}>
                                 Lihat Bukti Transfer
                               </a>
                             </div>

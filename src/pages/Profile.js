@@ -114,7 +114,7 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                 <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#fde68a', display: 'grid', placeItems: 'center', fontSize: '30px', color: '#92400e', fontWeight: '800', overflow: 'hidden', border: '3px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
                   {storedUser.profilePicture ? (
-                    <img src={`http://localhost:5000${storedUser.profilePicture}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={`${API.defaults.baseURL.replace('/api', '')}${storedUser.profilePicture}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     storedUser.name?.charAt(0).toUpperCase() || 'P'
                   )}
@@ -169,7 +169,7 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
                       {previewUrl ? (
                         <img src={previewUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (storedUser.profilePicture ? (
-                        <img src={`http://localhost:5000${storedUser.profilePicture}`} alt="Current Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={`${API.defaults.baseURL.replace('/api', '')}${storedUser.profilePicture}`} alt="Current Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
                         <span style={{ fontSize: '20px', color: '#9ca3af' }}>📷</span>
                       ))}
@@ -285,7 +285,7 @@ const Profile = ({ user, setUser, setIsLoggedIn, setUserRole }) => {
                               <span style={{ fontSize: '13px', color: '#166534', fontWeight: '600' }}>Bukti Transaksi Tersimpan</span>
                             </div>
                             <a 
-                              href={`http://localhost:5000${order.paymentProof}`} 
+                              href={`${API.defaults.baseURL.replace('/api', '')}${order.paymentProof}`} 
                               target="_blank" 
                               rel="noreferrer"
                               style={{ padding: '8px 14px', background: '#22c55e', color: 'white', textDecoration: 'none', borderRadius: '8px', fontSize: '13px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(34,197,94,0.2)' }}
