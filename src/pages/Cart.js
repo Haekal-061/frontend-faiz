@@ -288,7 +288,7 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
 
           <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#374151', marginBottom: '8px' }}>
-              Bukti Transfer Rekening 2053 5425 5325 531 <span style={{ color: '#ef4444' }}>*</span>
+              Bukti Transfer Rekening (BRI 2053 5425 5325 531) <span style={{ color: '#ef4444' }}>*</span>
             </label>
             <input
               type="file"
