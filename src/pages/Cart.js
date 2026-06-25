@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Trash2 } from 'lucide-react'; // Memanggil ikon tempat sampah
+import { Trash2 } from 'lucide-react'; 
 import Swal from 'sweetalert2';
 import API from '../services/api';
 import '../styles/Catalog.css';
@@ -11,7 +11,6 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
   const [paymentProof, setPaymentProof] = useState(null);
   const navigate = useNavigate();
 
-  // Fungsi bantuan untuk IndexedDB
   const saveFileToDB = (file) => {
     if (!file) return;
     const request = indexedDB.open('CampBreadDB', 1);
@@ -48,7 +47,6 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
     };
   };
 
-  // Memuat file bukti transfer dari IndexedDB jika ada
   useEffect(() => {
     loadFileFromDB((file) => {
       setPaymentProof(file);
@@ -70,7 +68,6 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
     }
   };
 
-  // Memilih semua barang secara otomatis saat pertama kali dimuat
   useEffect(() => {
     setBarangDipilih(keranjang.map(item => item.id));
   }, [keranjang]);
@@ -112,7 +109,6 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
     setBarangDipilih([]);
   };
 
-  // Fungsi baru untuk menghapus satu produk secara individu
   const hapusSatuBarang = (id) => {
     setKeranjang(keranjang.filter(item => item.id !== id));
     setBarangDipilih(barangDipilih.filter(itemId => itemId !== id));
@@ -165,10 +161,11 @@ const Keranjang = ({ keranjang, setKeranjang, isLoggedIn }) => {
       sessionStorage.removeItem('savedOrderNote');
       clearFileFromDB();
 
+      // BAGIAN YANG DIPERBAIKI (Penghapusan penanda konflik Git)
       Swal.fire({
         icon: 'success',
-        title: 'Pesanan Dikonfirmasi',
-        text: 'Pesanan Di Konfirmasi.',
+        title: 'Pesanan Berhasil',
+        text: 'Pesanan Dikonfirmasi.',
         toast: true,
         position: 'center',
         timer: 1500,
